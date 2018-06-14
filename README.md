@@ -511,14 +511,14 @@ var faxNumber: Optional<Int>
 
 Иногда нужно, чтобы объект был жив внутри замыкания, даже если все остальные ссылки на него удалены.
 
-Чтобы продлить время жизни объекта, можно использовать связку: сначала говорим `[weak self]`, а после этого — ```guard let `self` = self else { return }```:
+Чтобы продлить время жизни объекта, можно использовать связку: сначала говорим `[weak self]`, а после этого — ```guard let _self = self else { return }```:
 
 ```swift
 resource.request().onComplete { [weak self] response in
-  guard let `self` = self else {
+  guard let _self = self else {
     return
   }
-  let model = self.updateModel(response)
+  let model = _self.updateModel(response)
   self.updateUI(model)
 }
 ```
@@ -526,7 +526,7 @@ resource.request().onComplete { [weak self] response in
 
 Если не очевидно, кто будет жить дольше, то лучше использовать `[weak self]`.
 
-Кроме связки `[weak self]` + ```guard let `self` = self else { return }```, есть два других способа обращаться с объектом внутри замыкания, но они плохие.
+Кроме связки `[weak self]` + ```guard let _self = self else { return }```, есть два других способа обращаться с объектом внутри замыкания, но они плохие.
 
 **Вот так делать не надо:**
 
