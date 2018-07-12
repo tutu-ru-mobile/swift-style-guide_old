@@ -330,6 +330,8 @@ struct Person {
 
 // MARK: - IBOutlet
 
+// MARK: - Visual Components
+
 // MARK: - Public Properties
 
 // MARK: - Private Properties
