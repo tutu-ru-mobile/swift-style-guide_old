@@ -14,7 +14,7 @@
 * [Управление памятью](#Управление-памятью)
 * [Управление доступом](#Управление-доступом)
 * [Циклы](#Циклы)
-* [Golden path](#Golden-path)
+* [Golden path](#golden-path)
 * [Точки с запятыми](#Точки-с-запятыми)
 * [Скобки в if else](#Скобки-в-if-else)
 * [Копирайт](#Копирайт)
@@ -255,9 +255,9 @@ final class Box<T> {
 
 *Рекомендацями этого раздела следует пользоваться только следующих ситуациях:*
 
-- *вы пишите код конечного продукта*
+- *вы пишите код приложения, который не будет использован как cocoapod*
 
-- *вы пишите `fileprivate` код*
+- *вы пишите код с областью видимости `fileprivate`*
 
 ### Расположение вложенных типов
 
@@ -329,16 +329,18 @@ struct Person {
 
 ### Вложенные типы как namespace
 
-При появлении многоуровневых иерархических зависимостей типов друг от друга снижающих читаемость, следует объявлять очередной тип как вложенный в "родительский", но только в случае если нигде больше этот тип не используется:
+При появлении нескольких типов с общим префиксом, из-за того, что они относятся к одному модулю (части функциональности), следует объявлять эти типы как вложенные используя общий тип, как неймпспейс.
 
 **Правильно:**
 
 ```swift
-extension ConfirmOrderConfirmationCell {
-    class PaymentInfoImageView: UIView { }
-}
 class ConfirmOrderConfirmationCell: UITableViewCell { 
     let paymentInfoImageView = PaymentInfoImageView()
+}
+
+// MARK: - PaymentInfoImageView
+extension ConfirmOrderConfirmationCell {
+    class PaymentInfoImageView: UIView { }
 }
 ```
 
@@ -346,6 +348,7 @@ class ConfirmOrderConfirmationCell: UITableViewCell {
 
 ```swift
 class ConfirmOrderConfirmationPaymentInfoImageView: UIView { }
+
 class ConfirmOrderConfirmationCell: UITableViewCell { 
     let paymentInfoImageView = ConfirmOrderConfirmationPaymentInfoImageView()
 }
